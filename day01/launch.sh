@@ -20,7 +20,8 @@ measure_time(){
 RUNS=100
 
 programs=(
-    "./theo"
+    "./theo",
+    "./damso"
     )
 
 for program in "${programs[@]}"; do 
