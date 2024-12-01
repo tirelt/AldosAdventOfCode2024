@@ -1,7 +1,36 @@
 # AldosAdventOfCode2024
 
 Repo to store the compiled AoC24 codes of Aldo's members and compare the execution times.
-`Leaderboard.md` keeps track of the times.
+
+## Leaderboard
+in ms
+| day | theo | damso | julo |
+:------:|:-----|:----:|:-----:| 
+|1|0.4|||
+|2||||
+|3||||
+|4||||
+|5||||
+|6||||
+|7||||
+|8||||
+|9||||
+|10||||
+|11||||
+|12||||
+|13||||
+|14||||
+|15||||
+|16||||
+|17||||
+|18||||
+|19||||
+|20||||
+|21||||
+|22||||
+|23||||
+|24||||
+|25||||
 
 ## How does it work
 
