@@ -53,7 +53,6 @@ programs=(
 ```
 
 To make `launch.sh` executable:
-
 ```Bash
 chmod +x launch.sh
 ```
