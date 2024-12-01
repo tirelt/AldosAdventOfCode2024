@@ -1,6 +1,8 @@
 # AldosAdventOfCode2024
 
 Repo to store the compiled AoC24 codes of Aldo's members and compare the execution times.
+# Source files
+- [theo](https://github.com/tirelt/AdventOfCode/tree/master/2024)
 
 ## Leaderboard
 in ms
