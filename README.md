@@ -11,8 +11,8 @@ Repo to store the compiled AoC24 codes of Aldo's members and compare the executi
 in ms
 | day | theo | damso | julo |
 :------:|:-----|:----:|:-----:|
-|1|0.4|||
-|2||||
+|1|0.4|0.3||
+|2|0.2|||
 |3||||
 |4||||
 |5||||
@@ -55,4 +55,8 @@ programs=(
 To make `launch.sh` executable:
 ```Bash
 chmod +x launch.sh
+```
+To run the codes
+```Bash
+./launch.sh
 ```

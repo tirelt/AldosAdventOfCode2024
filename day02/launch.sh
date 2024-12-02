@@ -21,7 +21,6 @@ RUNS=1000
 
 programs=(
     "./theo",
-    "./damso"
     )
 
 for program in "${programs[@]}"; do 
