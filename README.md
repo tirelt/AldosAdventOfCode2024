@@ -39,24 +39,47 @@ in ms
 
 ## How does it work
 
-The execution is made from the day (e.g. `day01`) folders with the `launch.sh` executable file. An `input` of the day problem is directly in the folder, the programs need to load `input` from the `cwd`.
+### C++
 
-`launch.sh` will lauch `RUNS` times the programs in the `programs` list.
-`programs` should look like:
-
-```Bash
-programs=(
-    "./theo"
-    "./damso"
-    "./julo"
-    )
+First, we move inside the `cpp` folder
+```bash
+cd cpp
 ```
 
-To make `launch.sh` executable:
-```Bash
-chmod +x launch.sh
+Let us compile the file of `julo` for day 1, for the second task (b)
+```bash
+bash main.sh compile julo 1 b
 ```
-To run the codes
-```Bash
-./launch.sh
+
+We want to run them now:
+```bash
+bash main.sh run julo 1 b
 ```
+
+### Measure time 
+
+We use python to measure the time, display the performances and print the updated table.
+
+First, we need our virtual environment:
+```bash
+python -m venv aoc_venv
+source aoc_venv/bin/activate
+pip install -r requirements.txt
+```
+
+Then run the code
+```bash
+source aoc_venv/bin/activate
+cd aoc
+python main.py
+```
+And copy the output below
+
+
+# Results
+
+Results of 1000 iterations from i386 (64bit, 2 CPUs) 2300 MHz, updated 2024-12-02 20:50:02.451991+08:00 (HKT)
+|   day | task   | julo (cpp)   | theo (cpp)   |
+|------:|:-------|:-------------|:-------------|
+|     1 | a      | 25.8 ms      | 28.6 ms      |
+|     1 | b      | 27.2 ms      | 29.9 ms      |
