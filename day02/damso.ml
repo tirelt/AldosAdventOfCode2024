@@ -16,17 +16,17 @@ let rec isLineSafe line currentTrend =
       then false
       else isLineSafe (x2 :: xs) trend
 
-let isLineSafeWithTolerance line =
+let bruteIsLineSafeWithTolerance line =
   let valid = ref false in
   let i = ref 0 in
   while (not !valid) && !i < List.length line do
-    let lineWithoutIthElement = List.filteri ~f:(fun j _ -> j <> !i) line in
-    if isLineSafe lineWithoutIthElement initialTrend then valid := true
-    else Int.incr i
+    let reducedLine = List.filteri ~f:(fun j _ -> j <> !i) line in
+    if isLineSafe reducedLine initialTrend then valid := true else Int.incr i
   done;
   !valid
 
-let rec smartIsLineSafeWithTolerance ?previous line currentTrend =
+let rec smartIsLineSafeWithTolerance ?previous ?previousTrend line currentTrend
+    =
   match line with
   | [] -> true
   | _ :: [] -> true
@@ -37,12 +37,18 @@ let rec smartIsLineSafeWithTolerance ?previous line currentTrend =
         || trend = 0
         || (currentTrend <> initialTrend && trend <> currentTrend)
       then
-        isLineSafe (x1 :: xs) currentTrend
-        ||
-        match previous with
-        | Some p -> isLineSafe (p :: x2 :: xs) currentTrend
-        | None -> isLineSafe (x2 :: xs) currentTrend
-      else smartIsLineSafeWithTolerance ~previous:x1 (x2 :: xs) trend
+        match (previous, previousTrend) with
+        | Some p, Some pt ->
+            isLineSafe (x1 :: x2 :: xs) pt
+            || isLineSafe (p :: x2 :: xs) pt
+            || isLineSafe (p :: x1 :: xs) currentTrend
+        | None, None ->
+            isLineSafe (x1 :: xs) currentTrend
+            || isLineSafe (x2 :: xs) currentTrend
+        | None, _ | _, None -> raise (Invalid_argument "Should not happen")
+      else
+        smartIsLineSafeWithTolerance ~previous:x1 ~previousTrend:currentTrend
+          (x2 :: xs) trend
 
 let part1 lines =
   List.map lines ~f:(fun line -> String.split_on_chars ~on:[ ' ' ] line)
@@ -52,7 +58,10 @@ let part1 lines =
 let part2 lines =
   List.map lines ~f:(fun line -> String.split_on_chars ~on:[ ' ' ] line)
   |> List.map ~f:(fun line -> List.map line ~f:Int.of_string)
-  |> List.count ~f:(fun line -> isLineSafeWithTolerance line)
+  |> List.count ~f:(fun line ->
+         (* List.map line ~f:(fun x -> printf "%d " x) |> ignore;
+            printf " > %b\n" @@ smartIsLineSafeWithTolerance line initialTrend; *)
+         smartIsLineSafeWithTolerance line initialTrend)
 
 let solve filename =
   let content = In_channel.read_all filename in
