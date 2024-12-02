@@ -83,3 +83,8 @@ Results of 1000 iterations from i386 (64bit, 2 CPUs) 2300 MHz, updated 2024-12-0
 |------:|:-------|:-------------|:-------------|
 |     1 | a      | 25.8 ms      | 28.6 ms      |
 |     1 | b      | 27.2 ms      | 29.9 ms      |
+
+# TODO
+- [ ] Automatic compiling when the c++ source exists but not the built file
+- [ ] main.sh for ocaml files
+- [ ] add source files from Damien
