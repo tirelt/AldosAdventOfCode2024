@@ -36,7 +36,7 @@ case $command in
         mkdir -p "$output_dir"
 
         # Compile the C++ file
-        ocamlfind ocamlc -package base -package stdio -linkpkg -o "$executable_path" "$file_path"
+        ocamlfind ocamlc -package base -package stdio -package core -package re -linkpkg -o "$executable_path" "$file_path"
 
         # Check if the compilation was successful
         if [ $? -eq 0 ]; then
