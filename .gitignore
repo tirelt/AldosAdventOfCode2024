@@ -1,5 +1,5 @@
 .DS_Store
 build/
 aoc_venv/
-# *.cmi
-# *.cmo
+*.cmi
+*.cmo
