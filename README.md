@@ -56,6 +56,41 @@ We want to run them now:
 bash main.sh run julo 1 b
 ```
 
+### Ocaml
+
+First, we move inside the `ocaml` folder
+```bash
+cd ocaml
+```
+
+Install opam if necessary with brew.
+
+Then init opam
+```bash
+opam init
+```
+Select `Option 5: No, I'll remember to run eval $(opam env) when I need opam`.
+
+
+Finally instal packages
+```bash
+opam install base
+opam install stdio
+```
+
+<!-- eval $(opam env) -->
+
+Let us compile the file of `damso` for day 1, for the second task (b)
+```bash
+bash main.sh compile damso 1 b
+```
+
+We want to run them now:
+```bash
+bash main.sh run damso 1 b
+```
+
+
 ### Measure time 
 
 We use python to measure the time, display the performances and print the updated table.

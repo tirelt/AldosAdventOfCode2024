@@ -20,9 +20,8 @@ else
 fi
 
 # Construct the file paths
-file_path="./${day_formatted}/${name}/${task}.cpp"
-output_dir="../build/cpp/${day_formatted}/${name}"
-o_path="${output_dir}/${task}.o"
+file_path="./${day_formatted}/${name}/${task}.ml"
+output_dir="../build/ocaml/${day_formatted}/${name}"
 executable_path="${output_dir}/${task}"
 
 case $command in
@@ -37,9 +36,7 @@ case $command in
         mkdir -p "$output_dir"
 
         # Compile the C++ file
-        # g++ "$file_path" -o "$executable_path"
-        g++ -std=c++11 -fdiagnostics-color=always -g -Wno-psabi -c "$file_path" -o "$o_path"
-        g++ "$o_path" -o "$executable_path"
+        ocamlfind ocamlc -package base -package stdio -linkpkg -o "$executable_path" "$file_path"
 
         # Check if the compilation was successful
         if [ $? -eq 0 ]; then

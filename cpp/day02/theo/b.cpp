@@ -75,7 +75,7 @@ bool is_safe(vector<int>& report,unsigned tolerance){ //not going to work for to
 }
 
 int main(){
-    std::ifstream file("../data/day01/input.txt");
+    std::ifstream file("../data/day02/input.txt");
     string line;
     vector<int> report;
     string entry;
