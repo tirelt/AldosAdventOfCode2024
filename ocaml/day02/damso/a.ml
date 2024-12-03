@@ -69,4 +69,4 @@ let solve filename =
   printf "%d\n" @@ part1 lines
   (* printf "%d\n" @@ part2 lines *)
 
-let () = solve "../data/day03/input.txt"
+let () = solve "../data/day02/input.txt"

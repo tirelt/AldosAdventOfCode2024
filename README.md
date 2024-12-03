@@ -113,14 +113,21 @@ And copy the output below
 
 # Results
 
-Results of 1000 iterations from i386 (64bit, 2 CPUs) 2300 MHz, updated 2024-12-02 20:50:02.451991+08:00 (HKT)
-|   day | task   | julo (cpp)   | theo (cpp)   |
-|------:|:-------|:-------------|:-------------|
-|     1 | a      | 25.8 ms      | 28.6 ms      |
-|     1 | b      | 27.2 ms      | 29.9 ms      |
+Results of 1000 iterations from i386 (64bit, 2 CPUs) 2300 MHz, updated 2024-12-03 22:24:28.522258+08:00 (HKT)
+|   day | task   | damso (ocaml)   | julo (cpp)   | theo (cpp)   |
+|------:|:-------|:----------------|:-------------|:-------------|
+|     1 | a      | 48.6 ms         | 24.9 ms      | 26.5 ms      |
+|     1 | b      | 144.5 ms        | 26.8 ms      | 28.1 ms      |
+|     2 | a      | 45.5 ms         | nan ms       | nan ms       |
+|     2 | b      | 47.0 ms         | nan ms       | 31.9 ms      |
+|     3 | a      | nan ms          | nan ms       | 29.1 ms      |
+|     3 | b      | nan ms          | nan ms       | 30.2 ms      |
 
 # TODO
-- [ ] Theo's 2b is not compiling
-- [ ] Automatic compiling when the c++ source exists but not the built file
-- [ ] main.sh for ocaml files
-- [ ] add source files from Damien
+- [x] Theo's 2b is not compiling
+- [ ] Automatic compiling when the c++/ocaml source exists but not the built file
+- [x] main.sh for ocaml files
+- [x] add source files from Damien
+- [ ] don't measure everything again every day, only new added tasks
+- [ ] use https://github.com/sharkdp/hyperfine instead of naive python time measure
+- [ ] solve day 2 to 3

@@ -50,7 +50,7 @@ def update_task(day=None, task=None, num_runs=100):
 
     # Dictionary to store the results
     results = {}
-    for name in ["theo", "damso", "julo"]:
+    for name in ["damso", "theo", "julo"]:
         for language in ["cpp", "ocaml"]:
             name_language = f"{name} ({language})"
             for day in day_list:
@@ -81,7 +81,7 @@ if __name__ == "__main__":
     current_time_local, local_timezone = get_local_time()
 
     # Run compiled code
-    num_runs = 10
+    num_runs = 1000
     df_results = update_task(day=None, task=None, num_runs=num_runs)
     df_results_avg = df_results.apply(lambda col: pd.Series({
         "mean": col.mean(), "std": col.std(ddof=1), "sample": len(col)
