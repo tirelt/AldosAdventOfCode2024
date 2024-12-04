@@ -7,6 +7,7 @@ import psutil
 import platform
 import pytz
 import datetime
+import json
 
 def get_platform_name():
     # Using psutil
@@ -36,22 +37,36 @@ def measure_exec_time(command):
     end_time = time.time()
     return end_time - start_time, process.stdout.decode('utf-8'), process.stderr.decode('utf-8')
 
-def update_task(day=None, task=None, num_runs=100):
-    # parse args
-    if day is None:
-        day_list = range(1, 26)
-    else:
-        day_list = [int(day)]
+def create_arguments(config_dict):
+    keys = config_dict.keys()
+    arguments = {"day_list" : None, "name_list" : None, "language_list" : None, "task_list" : None, "num_runs" : 2}
+    if("day" in keys and len(config_dict["day"])):
+        arguments["day_list"]=config_dict["day"]
+    if("language" in keys and len(config_dict["language"])):
+        arguments["language_list"]=config_dict["language"]
+    if("name" in keys and len(config_dict["name"])):
+        arguments["name_list"]=config_dict["name"]
+    if("task" in keys and len(config_dict["task"])):
+        arguments["task_list"]=config_dict["task"]
+    if("num_runs" in keys and config_dict["num_runs"] is not None):
+        arguments["num_runs"]=config_dict["num_runs"] 
+    return arguments
 
-    if task is None:
+def update_task(day_list=None,name_list=None,language_list=None,task_list=None, num_runs=2):
+    # parse args
+    if day_list is None:
+        day_list = range(1, 26)
+    if language_list is None:
+        language_list = ["cpp", "ocaml"]
+    if name_list is None:
+        name_list = ["damso", "theo", "julo"]
+    if task_list is None:
         task_list = ["a", "b"]
-    else:
-        task_list = [str(task)]
 
     # Dictionary to store the results
     results = {}
-    for name in ["damso", "theo", "julo"]:
-        for language in ["cpp", "ocaml"]:
+    for name in name_list:
+        for language in language_list:
             name_language = f"{name} ({language})"
             for day in day_list:
                 for task in task_list:
@@ -81,8 +96,12 @@ if __name__ == "__main__":
     current_time_local, local_timezone = get_local_time()
 
     # Run compiled code
-    num_runs = 1000
-    df_results = update_task(day=None, task=None, num_runs=num_runs)
+    with open('config.json', 'r') as config_file:
+        config_dict = json.load(config_file)
+    arguments = create_arguments(config_dict)
+
+    num_runs = arguments["num_runs"]
+    df_results = update_task(**arguments)
     df_results_avg = df_results.apply(lambda col: pd.Series({
         "mean": col.mean(), "std": col.std(ddof=1), "sample": len(col)
     }))
