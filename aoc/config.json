@@ -1,6 +1,6 @@
 {
-    "num_runs": 10,
+    "num_runs": 1000,
     "day":[], 
-    "name":["damso"],
+    "name":[],
     "language":[]
 }
