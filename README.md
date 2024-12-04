@@ -48,6 +48,8 @@ Finally instal packages
 opam install base
 opam install core
 opam install stdio
+opam install ocamlfind
+opam install re
 ```
 
 <!-- eval $(opam env) -->
