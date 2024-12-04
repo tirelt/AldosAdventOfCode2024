@@ -71,7 +71,7 @@ def update_task(day_list=None,name_list=None,language_list=None,task_list=None, 
             for day in day_list:
                 for task in task_list:
                     if (name_language, day, task) not in results:
-                        exec_path = f"../build/{language}/day{day:02}/{name}/{task}"
+                        exec_path = f"./build/{language}/day{day:02}/{name}/{task}"
                         if os.path.exists(exec_path):
                             # Measure execution times
                             times = []
@@ -96,7 +96,7 @@ if __name__ == "__main__":
     current_time_local, local_timezone = get_local_time()
 
     # Run compiled code
-    with open('config.json', 'r') as config_file:
+    with open('./aoc/config.json', 'r') as config_file:
         config_dict = json.load(config_file)
     arguments = create_arguments(config_dict)
 
@@ -105,7 +105,7 @@ if __name__ == "__main__":
     df_results_avg = df_results.apply(lambda col: pd.Series({
         "mean": col.mean(), "std": col.std(ddof=1), "sample": len(col)
     }))
-    df_results_avg.to_csv(f"../output/{platform_name}_{num_runs}_raw.csv")
+    df_results_avg.to_csv(f"./output/{platform_name}_{num_runs}_raw.csv")
     df_results_avg_formatted = df_results_avg.loc["mean"].unstack(0).applymap(lambda x: f"{1000*x:.1f} ms")
     df_results_avg_formatted.index = pd.MultiIndex.from_tuples(df_results_avg_formatted.index).set_names(["day", "task"])
     df_results_avg_formatted = df_results_avg_formatted.reset_index()
