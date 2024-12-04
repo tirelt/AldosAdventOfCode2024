@@ -91,7 +91,7 @@ int main(){
             ++res_1;
         }  
     }
-    file.close(); 
-    cout<< "Part 2: " << res_2 << endl;  
+    file.close();
+    cout<< "Part 1: " << res_1 << endl;  
     return 0;
 }
