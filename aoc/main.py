@@ -81,7 +81,7 @@ if __name__ == "__main__":
     current_time_local, local_timezone = get_local_time()
 
     # Run compiled code
-    num_runs = 2
+    num_runs = 1000
     df_results = update_task(day=None, task=None, num_runs=num_runs)
     df_results_avg = df_results.apply(lambda col: pd.Series({
         "mean": col.mean(), "std": col.std(ddof=1), "sample": len(col)

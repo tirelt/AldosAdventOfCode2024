@@ -98,6 +98,18 @@ Results of 1000 iterations from i386 (64bit, 2 CPUs) 2300 MHz, updated 2024-12-0
 | 3 | a | 81.0 ms | nan ms | 29.1 ms |
 | 3 | b | 68.5 ms | nan ms | 30.2 ms |
 
+Results of 1000 iterations from arm (64bit, 10 CPUs) 4 MHz, updated 2024-12-04 20:09:02.300488+08:00 (HKT)
+| day | task | damso (ocaml) | julo (cpp) | theo (cpp) |
+|------:|:-------|:----------------|:-------------|:-------------|
+| 1 | a | nan ms | nan ms | 8.1 ms |
+| 1 | b | nan ms | nan ms | 8.3 ms |
+| 2 | a | nan ms | nan ms | 7.2 ms |
+| 2 | b | nan ms | nan ms | 7.1 ms |
+| 3 | a | nan ms | nan ms | 8.6 ms |
+| 3 | b | nan ms | nan ms | 8.0 ms |
+| 4 | a | nan ms | nan ms | 7.4 ms |
+| 4 | b | nan ms | nan ms | 7.2 ms |
+
 # TODO
 
 - [x] Theo's 2b is not compiling
