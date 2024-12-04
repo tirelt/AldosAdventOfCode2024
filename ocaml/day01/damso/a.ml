@@ -42,7 +42,6 @@ let part2 lines =
 let solve filename =
   let content = In_channel.read_all filename in
   let lines = String.split_lines content in
-  printf "%d\n" @@ part1 lines;
-  printf "%d\n" @@ part2 lines
+  printf "%d\n" @@ part1 lines
 
-let () = solve "input"
+let () = solve "../data/day01/input.txt"
