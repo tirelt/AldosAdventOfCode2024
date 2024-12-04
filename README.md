@@ -2,41 +2,6 @@
 
 Repo to store the compiled AoC24 codes of Aldo's members and compare the execution times.
 
-# Source files
-
-- [theo](https://github.com/tirelt/AdventOfCode/tree/master/2024)
-
-## Leaderboard
-
-in ms
-| day | theo | damso | julo |
-:------:|:-----|:----:|:-----:|
-|1|0.4|0.3||
-|2|0.2|||
-|3||||
-|4||||
-|5||||
-|6||||
-|7||||
-|8||||
-|9||||
-|10||||
-|11||||
-|12||||
-|13||||
-|14||||
-|15||||
-|16||||
-|17||||
-|18||||
-|19||||
-|20||||
-|21||||
-|22||||
-|23||||
-|24||||
-|25||||
-
 ## How does it work
 
 ### C++
@@ -141,4 +106,5 @@ Results of 1000 iterations from i386 (64bit, 2 CPUs) 2300 MHz, updated 2024-12-0
 - [x] add source files from Damien
 - [ ] don't measure everything again every day, only new added tasks
 - [ ] use https://github.com/sharkdp/hyperfine instead of naive python time measure
-- [ ] solve day 2 to 3
+- [ ] solve day 2, 3 and 4
+- [ ] Dont use N = 1000 for tests but something dynamic to be below a certain maximal testing time
