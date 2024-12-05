@@ -2,4 +2,6 @@
 build/
 aoc_venv/
 *.cmi
+*.cmx
+*.o
 *.cmo
