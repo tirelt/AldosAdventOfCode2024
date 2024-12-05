@@ -1,6 +1,6 @@
 {
-    "num_runs": 2,
-    "day":[], 
+    "num_runs": 100,
+    "day":[5], 
     "name":[],
     "language":[]
 }
