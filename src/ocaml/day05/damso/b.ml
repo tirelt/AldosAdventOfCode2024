@@ -2,60 +2,83 @@ open Base
 open Stdio
 
 let getRulesAndUpdates lines =
-  let rec getRulesAndUpdates' lines acc1 acc2 mode =
+  let rec aux lines rules updates is_rule =
     match lines with
-    | [] -> (acc1, acc2)
-    | "" :: xs -> getRulesAndUpdates' xs acc1 acc2 "UPDATES"
+    | [] -> (rules, updates)
+    | "" :: xs -> aux xs rules updates false
     | line :: xs ->
-        if String.equal mode "RULES" then
-          getRulesAndUpdates' xs (line :: acc1) acc2 mode
-        else getRulesAndUpdates' xs acc1 (line :: acc2) mode
+        if is_rule then
+          aux xs (String.split_on_chars ~on:[ '|' ] line :: rules) updates true
+        else aux xs rules (line :: updates) false
   in
-  let rules, updates = getRulesAndUpdates' lines [] [] "RULES" in
-  (List.map rules ~f:(fun x -> String.split_on_chars ~on:[ '|' ] x), updates)
+  aux lines [] [] true
 
-let getMiddleElement list = List.nth_exn list @@ (List.length list / 2)
+let getMiddleElement list =
+  let rec aux slow fast =
+    match fast with
+    | [] | [ _ ] -> slow
+    | _ :: _ :: rest -> aux (List.tl_exn slow) rest
+  in
+  match list with
+  | [] -> failwith "Empty list has no middle element"
+  | _ -> List.hd_exn (aux list list)
 
-let rec updateWorksWithRules update rules =
-  match rules with
-  | [] -> true
-  | [ a; b ] :: xs -> (
-      match
-        ( String.substr_index update ~pattern:a,
-          String.substr_index update ~pattern:b )
-      with
-      | None, None -> updateWorksWithRules update xs
-      | None, _ | _, None -> updateWorksWithRules update xs
-      | Some ia, Some ib ->
-          if ia < ib then updateWorksWithRules update xs else false)
-  | _ :: xs -> updateWorksWithRules update xs
+let updateWorksWithRules update rules =
+  let rec aux rules =
+    match rules with
+    | [] -> true
+    | [ a; b ] :: xs -> (
+        match
+          ( String.substr_index update ~pattern:a,
+            String.substr_index update ~pattern:b )
+        with
+        | Some ia, Some ib when ia >= ib -> false
+        | _ -> aux xs)
+    | _ :: xs -> aux xs
+  in
+  aux rules
 
 let part1 lines =
   let rules, updates = getRulesAndUpdates lines in
-  List.filter ~f:(fun update -> updateWorksWithRules update rules) updates
-  |> List.map ~f:(fun update -> String.split_on_chars ~on:[ ',' ] update)
-  |> List.map ~f:(fun update -> getMiddleElement update |> Int.of_string)
-  |> List.sum (module Int) ~f:Fn.id
+  List.fold updates ~init:0 ~f:(fun acc update ->
+      if updateWorksWithRules update rules then
+        let middle_element =
+          update
+          |> String.split_on_chars ~on:[ ',' ]
+          |> getMiddleElement |> Int.of_string
+        in
+        acc + middle_element
+      else acc)
 
-let compareFromRules rules =
+let createRuleMap rules =
+  let table = Hashtbl.create (module String) in
+  List.iter rules ~f:(function
+    | [ a; b ] ->
+        Hashtbl.set table ~key:a ~data:b;
+        Hashtbl.set table ~key:b ~data:a
+    | _ -> ());
+  table
+
+let compareFromRules rule_map =
  fun a b ->
-  match
-    List.find rules ~f:(fun rule ->
-        List.equal String.equal rule [ a; b ]
-        || List.equal String.equal rule [ b; a ])
-  with
-  | Some [ x; y ] -> if String.equal x a && String.equal y b then -1 else 1
-  | _ -> 0
+  match Hashtbl.find rule_map a with
+  | Some linked when String.equal linked b -> -1
+  | Some _ -> 1
+  | None -> 0
 
 let part2 lines =
   let rules, updates = getRulesAndUpdates lines in
-  List.filter
-    ~f:(fun update -> not @@ updateWorksWithRules update rules)
-    updates
-  |> List.map ~f:(fun update -> String.split_on_chars ~on:[ ',' ] update)
-  |> List.map ~f:(List.sort ~compare:(compareFromRules rules))
-  |> List.map ~f:(fun update -> getMiddleElement update |> Int.of_string)
-  |> List.sum (module Int) ~f:Fn.id
+  let ruleMap = createRuleMap rules in
+  let compare = compareFromRules ruleMap in
+  List.fold updates ~init:0 ~f:(fun acc update ->
+      if not (updateWorksWithRules update rules) then
+        let middleElement =
+          update
+          |> String.split_on_chars ~on:[ ',' ]
+          |> List.sort ~compare |> getMiddleElement |> Int.of_string
+        in
+        acc + middleElement
+      else acc)
 
 let solve filename =
   let content = In_channel.read_all filename in
