@@ -47,4 +47,4 @@ let solve filename =
   let matrix = Array.of_list (List.map lines ~f:String.to_array) in
   printf "%d\n" @@ part2 matrix
 
-let () = solve "../data/day04/input.txt"
+let () = solve "./data/day04/input.txt"
