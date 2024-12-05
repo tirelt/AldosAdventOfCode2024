@@ -52,6 +52,14 @@ def create_arguments(config_dict):
         arguments["num_runs"]=config_dict["num_runs"] 
     return arguments
 
+def get_extension(language):
+    if language == "cpp":
+        return "cpp"
+    elif language == "ocaml":
+        return "ml"
+    else:
+        raise ValueError(f"{language} Not implemented")
+
 def update_task(day_list=None,name_list=None,language_list=None,task_list=None, num_runs=2):
     # parse args
     if day_list is None:
@@ -72,6 +80,14 @@ def update_task(day_list=None,name_list=None,language_list=None,task_list=None, 
                 for task in task_list:
                     if (name_language, day, task) not in results:
                         exec_path = f"./build/{language}/day{day:02}/{name}/{task}"
+                        source_path = f"./src/{language}/day{day:02}/{name}/{task}.{get_extension(language)}"
+                        # compile if necessary
+                        if (os.path.exists(source_path)) and (not os.path.exists(exec_path)):
+                            command = f"bash main.sh compile {language} {name} {day} {task}"
+                            print(command)
+                            process = subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                            print(process.stdout.decode('utf-8'))
+                            print(process.stderr.decode('utf-8'))
                         if os.path.exists(exec_path):
                             # Measure execution times
                             times = []
@@ -102,14 +118,15 @@ if __name__ == "__main__":
 
     num_runs = arguments["num_runs"]
     df_results = update_task(**arguments)
-    df_results_avg = df_results.apply(lambda col: pd.Series({
-        "mean": col.mean(), "std": col.std(ddof=1), "sample": len(col)
-    }))
-    df_results_avg.to_csv(f"./output/{platform_name}_{num_runs}_raw.csv")
-    df_results_avg_formatted = df_results_avg.loc["mean"].unstack(0).applymap(lambda x: f"{1000*x:.1f} ms")
-    df_results_avg_formatted.index = pd.MultiIndex.from_tuples(df_results_avg_formatted.index).set_names(["day", "task"])
-    df_results_avg_formatted = df_results_avg_formatted.reset_index()
-    df_results_avg_md = df_results_avg_formatted.to_markdown(index=False)
+    if len(df_results) > 0:
+        df_results_avg = df_results.apply(lambda col: pd.Series({
+            "mean": col.mean(), "std": col.std(ddof=1), "sample": len(col)
+        }))
+        df_results_avg.to_csv(f"./output/{platform_name}_{num_runs}_raw.csv")
+        df_results_avg_formatted = df_results_avg.loc["mean"].unstack(0).applymap(lambda x: f"{1000*x:.1f} ms")
+        df_results_avg_formatted.index = pd.MultiIndex.from_tuples(df_results_avg_formatted.index).set_names(["day", "task"])
+        df_results_avg_formatted = df_results_avg_formatted.reset_index()
+        df_results_avg_md = df_results_avg_formatted.to_markdown(index=False)
 
-    print(f"Results of {num_runs} iterations from {platform_name}, updated {current_time_local} ({local_timezone})")
-    print(df_results_avg_md)
+        print(f"Results of {num_runs} iterations from {platform_name}, updated {current_time_local} ({local_timezone})")
+        print(df_results_avg_md)
