@@ -47,7 +47,7 @@ case $command in
         if [ "$language" = "cpp" ]; then
             g++ -std=c++11 "$file_path" -o "$executable_path"
         else 
-            ocamlfind ocamlc -package base -package stdio -package core -package re -linkpkg -o "$executable_path" "$file_path"
+            ocamlfind ocamlopt -package base -package stdio -package core -package re -linkpkg -o "$executable_path" "$file_path"
         fi
         # Check if the compilation was successful
         if [ $? -eq 0 ]; then
