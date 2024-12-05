@@ -116,7 +116,7 @@ Finnaly to run the test
 
 # TODO
 
-- [ ] Automatic compiling when the c++/ocaml source exists but not the built file
+- [x] Automatic compiling when the c++/ocaml source exists but not the built file
 - [ ] don't measure everything again every day, only new added tasks
 - [ ] use https://github.com/sharkdp/hyperfine instead of naive python time measure
 - [ ] solve day 2, 3 and 4
