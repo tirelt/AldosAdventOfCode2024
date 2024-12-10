@@ -83,6 +83,7 @@
         "deque": "cpp",
         "execution": "cpp",
         "map": "cpp",
-        "print": "cpp"
+        "print": "cpp",
+        "set": "cpp"
     }
 }
