@@ -30,8 +30,8 @@ Results of 1000 iterations from arm (64bit, 10 CPUs) 4 MHz, updated 2024-12-04 2
 |     5 | b      | nan ms          | nan ms       | 25.5 ms       |
 |     6 | a      | nan ms          | nan ms       | 32.9 ms       |
 |     6 | b      | nan ms          | nan ms       | 5101.1 ms       |
-|     7 | a      | nan ms          | nan ms       | 92.0 ms       |
-|     7 | b      | nan ms          | nan ms       | 1607.6 ms       |
+|     7 | a      | nan ms          | nan ms       | 17.6 ms        |
+|     7 | b      | nan ms          | nan ms       | 168.3 ms       |
 |     8 | a      | nan ms          | nan ms       | 7.8 ms       |
 |     8 | b      | nan ms          | nan ms       | 7.8 ms       |
 
